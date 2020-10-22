@@ -14,6 +14,15 @@ provider "kubernetes" {
 }
 
 provider "helm" {
+
+   // This has to be configured AGAIN for Helm to work properly
+   kubernetes {
+     host                   = data.aws_eks_cluster.ga.endpoint
+     cluster_ca_certificate = base64decode(data.aws_eks_cluster.ga.certificate_authority[0].data)
+     token                  = data.aws_eks_cluster_auth.ga.token
+     load_config_file       = false
+  }
+
 }
 
 data "kubernetes_ingress" "example" {
