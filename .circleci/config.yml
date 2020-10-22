@@ -68,6 +68,7 @@ jobs:
       - run:
           name: terraform plan
           command: |
+              terraform refresh -target=data.aws_eks_cluster_auth.ga
               terraform taint helm_release.survey-planning-tool
               terragrunt plan -out=terraform.plan -input=false
       - run: mv ./terraform.plan workspace
